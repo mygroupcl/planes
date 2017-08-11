@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="User's Schedule K2 Items">
+        <message>
+            Display list of Schedule K2 items which the logged in subscribers can access to
+        </message>
+    </layout>
+</metadata>
