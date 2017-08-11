@@ -644,6 +644,13 @@ class OSMembershipController extends MPFControllerAdmin
 			$db->execute();
 		}
 
+		if (!in_array('updated_date', $fields))
+		{
+			$sql = "ALTER TABLE  `#__osmembership_fields` ADD  `updated_date` DATETIME DEFAULT NULL;";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
 		$sql = 'SELECT COUNT(*) FROM #__osmembership_fields WHERE show_on_members_list = 1';
 		$db->setQuery($sql);
 		$total = $db->loadResult();

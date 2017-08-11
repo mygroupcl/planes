@@ -137,6 +137,7 @@ class MPFViewList extends MPFViewHtml
 			{
 				JToolbarHelper::publish('publish', 'JTOOLBAR_PUBLISH', true);
 				JToolbarHelper::unpublish('unpublish', 'JTOOLBAR_UNPUBLISH', true);
+				JToolbarHelper::unpublish('unfrozen', 'JTOOLBAR_UNFROZEN', true);
 			}
 		}
 

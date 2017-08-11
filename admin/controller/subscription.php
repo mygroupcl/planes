@@ -362,4 +362,31 @@ class OSMembershipControllerSubscription extends OSMembershipController
 
 		OSMembershipHelperData::excelExport($fields, array($row), 'subscriptions_import_template');
 	}
+
+
+	/**
+	 * unfrozen a subscription for given user
+	 */
+	public function unfrozen()
+	{
+		if ($this->app->isSite())
+		{
+			throw new Exception('You are not allowed to perform this action', 403);
+		}
+
+		$this->checkAccessPermission('subscriptions');
+
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid);
+		//$id  = $cid[0];
+
+		/* @var OSMembershipModelSubscription $model */
+		$model = $this->getModel('subscription');
+		foreach ($cid as $key => $id) {
+			$model->unfrozen($id);
+		}
+		
+
+		$this->setRedirect($this->getViewListUrl(), JText::_('Subscription was successfully unfrozen for selected subscriber'));
+	}
 }

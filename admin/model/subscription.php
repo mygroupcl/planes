@@ -664,4 +664,89 @@ class OSMembershipModelSubscription extends MPFModelAdmin
 	{
 		return parent::getTable($name);
 	}
+
+	/**
+	 * unfrozen subscription for a given subscriber
+	 *
+	 * @param $id
+	 *
+	 * @return bool
+	 */
+	public function unfrozen($id)
+	{
+		//$rowOld = $this->getTable('Subscriber');
+		$row    = $this->getTable('Subscriber');
+		$row->load($id);
+		$row->published      = 1;
+		$row->act            = 'unfrozen';
+
+		// Now, need to calculate subscription from date and to date
+		$db       = $this->getDbo();
+		$nullDate = $db->getNullDate();
+		$query    = $db->getQuery(true);
+		$query->select('*ƒ')
+			->from('#__osmembership_plans')
+			->where('id = ' . (int) $row->plan_id);
+		$db->setQuery($query);
+		$plan = $db->loadObject();
+		$now = JFactory::getDate()->toSql();
+
+		$row->updated_date = $now;
+
+		$subscription_length 		= $rowPlan->subscription_length;
+		$subscription_length_unit   = $rowPlan->subscription_length_unit;
+		switch ($subscription_length_unit) {
+			case 'D':
+				$unit = "days";
+				break;
+			case 'W':
+				$unit = "weeks";
+				break;
+			case 'M':
+				$unit = "months";
+				break;
+			case 'Y':
+				$unit = "years";
+				break;
+			default:
+				$unit = null;
+				break;
+		}
+
+		if ($rowPlan->expired_date && $rowPlan->expired_date != $nullDate)
+		{
+			$new_expire_date = strtotime(date('d-m-Y H:m:s'),'now +'.$subscription_length.' '.$unit);
+			$day_diff = date_diff(create_date($row->updated_date),crete_date($row->from_date))->days;
+
+			$new_expire_date_fixed = strtotime(date('d-m-Y H:m:s'),$new_expire_date .'+'.$day_diff.' days');
+			$new_expire_date_fixed = JFactory::getDate($new_expire_date_fixed);
+			$expiredDate = $new_expire_date_fixed->toSql();
+
+			$row->to_date = $expiredDate;
+		}
+		else
+		{
+			if ($rowPlan->lifetime_membership)
+			{
+				$row->to_date = '2099-12-31 23:59:59';
+			}
+			else
+			{
+				$dateIntervalSpec = 'P' . $rowPlan->subscription_length . $rowPlan->subscription_length_unit;
+				$row->to_date     = $date->add(new DateInterval($dateIntervalSpec))->toSql();
+			}
+		}
+
+		$row->store();
+
+		JPluginHelper::importPlugin('osmembership');
+		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher->trigger('onAfterStoreSubscription', array($row));
+		$dispatcher->trigger('onMembershipActive', array($row));
+
+		$config = OSMembershipHelper::getConfig();
+		OSMembershipHelper::sendEmails($row, $config);
+
+		return true;
+	}
 }
