@@ -47,6 +47,8 @@ class OSMembershipViewSubscriptionHtml extends MPFViewItem
 		$options[]          = JHtml::_('select.option', 2, JText::_('OSM_EXPIRED'));
 		$options[]          = JHtml::_('select.option', 3, JText::_('OSM_CANCELLED_PENDING'));
 		$options[]          = JHtml::_('select.option', 4, JText::_('OSM_CANCELLED_REFUNDED'));
+		$options[]          = JHtml::_('select.option', 5, JText::_('OSM_CONSUMED'));
+		$options[]          = JHtml::_('select.option', 6, JText::_('OSM_FROZEN'));
 		$lists['published'] = JHtml::_('select.genericlist', $options, 'published', ' class="inputbox" ', 'value', 'text', $item->published);
 
 		//Get list of payment methods

@@ -611,6 +611,68 @@ class OSMembershipHelperSubscription
 	}
 
 	/**
+	 * Get plan which the given user has frozen for
+	 *
+	 * @param int $userId
+	 *
+	 * @return array
+	 */
+	public static function getFrozenPlans($userId = 0)
+	{
+		if ($userId == 0)
+		{
+			$userId = (int) JFactory::getUser()->get('id');
+		}
+
+		if ($userId > 0)
+		{
+			$db    = JFactory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->select('DISTINCT plan_id')
+				->from('#__osmembership_subscribers')
+				->where('user_id = ' . $userId)
+				->where('published = 6');
+			$db->setQuery($query);
+
+			return $db->loadColumn();
+		}
+
+		return array();
+	}
+
+	/**
+	 * Get plan which the given user has frozen for
+	 *
+	 * @param int $userId
+	 *
+	 * @return array
+	 */
+	public static function getConsumedandexpiredPlans($userId = 0)
+	{
+		if ($userId == 0)
+		{
+			$userId = (int) JFactory::getUser()->get('id');
+		}
+
+		if ($userId > 0)
+		{
+			$db    = JFactory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->select('DISTINCT plan_id')
+				->from('#__osmembership_subscribers')
+				->where('user_id = ' . $userId)
+				->where('published in (2,5)');
+			$db->setQuery($query);
+
+			return $db->loadColumn();
+		}
+
+		return array();
+	}
+
+	/**
 	 * Get subscription from ID
 	 *
 	 * @param string $subscriptionId

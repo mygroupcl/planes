@@ -60,6 +60,14 @@ defined('_JEXEC') or die;
 			<?php echo JHtml::_('calendar', (($this->item->expired_date == $this->nullDate) ||  !$this->item->expired_date) ? '' : JHtml::_('date', $this->item->expired_date, 'Y-m-d', null), 'expired_date', 'expired_date') ; ?>
 		</div>
 	</div>
+	<div class="control-group">
+		<div class="control-label">
+			<?php echo  JText::_('OSM_SUBSCRIPTION_QUOTAS'); ?>
+		</div>
+		<div class="controls">
+			<input class="input-small" type="text" name="subscription_quotas" id="subscription_quotas" size="10" maxlength="250" value="<?php echo $this->item->subscription_quotas;?>" />
+		</div>
+	</div>
 	<?php
 	if ($this->item->expired_date && $this->item->expired_date != $this->nullDate)
 	{

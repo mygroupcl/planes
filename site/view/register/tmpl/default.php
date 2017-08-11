@@ -63,7 +63,7 @@ echo $this->loadTemplate('login', array('fields' => $fields));
 <form method="post" name="os_form" id="os_form" action="<?php echo JRoute::_('index.php?option=com_osmembership&task=register.process_subscription&Itemid='.$this->Itemid, false, $this->config->use_https ? 1 : 0); ?>" enctype="multipart/form-data" autocomplete="off" class="form form-horizontal">
 	<?php
 	echo $this->loadTemplate('form', array('fields' => $fields));
-	if ($this->fees['amount'] > 0 || $this->form->containFeeFields() || $this->plan->recurring_subscription)
+	if (isset($this->fees['amount']) && $this->fees['amount'] > 0 || $this->form->containFeeFields() || $this->plan->recurring_subscription)
 	{
 	?>
 		<h3 class="osm-heading"><?php echo JText::_('OSM_PAYMENT_INFORMATION');?></h3>

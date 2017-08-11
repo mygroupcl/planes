@@ -1331,6 +1331,13 @@ class OSMembershipController extends MPFControllerAdmin
 			$db->execute();
 		}
 
+		if (!in_array('subscription_quotas', $fields))
+		{
+			$sql = "ALTER TABLE  `#__osmembership_plans` ADD  `subscription_quotas` INT NOT NULL DEFAULT  '0';";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
 		// Renewal rates
 		$fields = array_keys($db->getTableColumns('#__osmembership_renewrates'));
 		if (!in_array('renew_option_length', $fields))
@@ -1691,6 +1698,14 @@ class OSMembershipController extends MPFControllerAdmin
 		if (!in_array('setup_fee', $fields))
 		{
 			$sql = "ALTER TABLE  `#__osmembership_subscribers` ADD  `setup_fee` DECIMAL( 10, 2 ) NULL DEFAULT  '0';";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
+		if (!in_array('plan_subscription_quotas', $fields))
+		{
+			$needToMigrateData = true;
+			$sql               = "ALTER TABLE  `#__osmembership_subscribers` ADD  `plan_subscription_quotas` INT NOT NULL DEFAULT  '0';";
 			$db->setQuery($sql);
 			$db->execute();
 		}

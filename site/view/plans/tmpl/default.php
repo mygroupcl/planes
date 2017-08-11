@@ -8,6 +8,9 @@
  */
 defined('_JEXEC') or die ;
 ?>
+
+
+
 <div id="osm-plans-list-default" class="osm-container">
 	<?php
 		if (!$this->input->getInt('hmvc_call'))
