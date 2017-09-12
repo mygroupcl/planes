@@ -90,6 +90,11 @@ class OSMembershipControllerRegister extends OSMembershipController
 			$input->post->set('first_name', $input->post->get('email'));
 		}
 
+		if($user = JFactory::getUser() ){
+			$input->post->set('first_name', $user->get('name'));
+			//$input->post->set('last_name', $user->get('last_name'));
+		}
+
 		// Validate captcha
 		$user = JFactory::getUser();
 

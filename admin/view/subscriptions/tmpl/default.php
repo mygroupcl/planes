@@ -10,6 +10,7 @@
 defined( '_JEXEC' ) or die ;
 $ordering = ($this->state->filter_order == 'tbl.ordering');
 
+JToolbarHelper::custom('unfrozen', 'unfrozen', 'unfrozen', 'OSM_UNFROZEN', false);
 JToolbarHelper::custom('renew', 'plus', 'plus', 'OSM_RENEW_SUBSCRIPTION', true);
 JToolbarHelper::custom('export', 'download', 'download', 'OSM_EXPORT_SUBSCRIPTIONS', false);
 
@@ -50,10 +51,10 @@ JHtml::_('formbehavior.chosen', 'select');
 						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
 					</th>
 					<th class="title" style="text-align: left;">
-						<?php echo JHtml::_('grid.sort',  JText::_('OSM_FIRSTNAME'), 'tbl.first_name', $this->state->filter_order_Dir, $this->state->filter_order ); ?>
+						<?php echo JHtml::_('grid.sort',  JText::_('OSM_NAME'), 'tbl.first_name', $this->state->filter_order_Dir, $this->state->filter_order ); ?>
 					</th>
 					<th class="title" style="text-align: left;">
-						<?php echo JHtml::_('grid.sort',  JText::_('OSM_LASTNAME'), 'tbl.last_name', $this->state->filter_order_Dir, $this->state->filter_order ); ?>
+						<?php echo JHtml::_('grid.sort',  JText::_('OSM_USERNAME'), 'tbl.last_name', $this->state->filter_order_Dir, $this->state->filter_order ); ?>
 					</th>
 					<th class="title" style="text-align: left;">
 						<?php echo JHtml::_('grid.sort',  JText::_('OSM_PLAN'), 'b.title', $this->state->filter_order_Dir, $this->state->filter_order ); ?>

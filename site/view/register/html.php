@@ -75,7 +75,7 @@ class OSMembershipViewRegisterHtml extends MPFViewHtml
 					->from('#__osmembership_subscribers')
 					->where('user_id = ' . $userId)
 					->where('plan_id = ' . $plan->id)
-					->where('published IN (1, 2)');
+					->where('published IN (1, 2, 5)');
 				$db->setQuery($query);
 
 				$total = (int) $db->loadResult();

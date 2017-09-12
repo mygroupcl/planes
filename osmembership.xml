@@ -16,6 +16,11 @@
             <file driver="mysql" charset="utf8">sql/install.osmembership.sql</file>
         </sql>
     </install>
+    <uninstall>
+      <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.osmembership.sql</file>
+      </sql>
+    </uninstall>
     <media destination="com_osmembership" folder="site/media">
         <filename>invoice_logo.png</filename>
         <filename>ajax-loadding-animation.gif</filename>
@@ -27,6 +32,7 @@
     </media>
     <languages>
         <language tag="en-GB">site/languages/en-GB/en-GB.com_osmembership.ini</language>
+        <language tag="es-ES">site/languages/es-ES/es-ES.com_osmembership.ini</language>
     </languages>
     <files folder="site">
         <filename>router.php</filename>
@@ -39,27 +45,12 @@
         <folder>tcpdf</folder>        
     </files>
     <administration>
-        <menu>OSM_MEMBERSHIP</menu>
-        <submenu>
-            <menu link="option=com_osmembership&amp;view=dashboard">OSM_DASHBOARD</menu>
-            <menu link="option=com_osmembership&amp;view=configuration">OSM_CONFIGURATION</menu>
-            <menu link="option=com_osmembership&amp;view=categories">OSM_PLAN_CATEGORIES</menu>
-            <menu link="option=com_osmembership&amp;view=plans">OSM_SUBSCRIPTION_PLANS</menu>
-            <menu link="option=com_osmembership&amp;view=subscriptions">OSM_SUBSCRIPTIONS</menu>
-            <menu link="option=com_osmembership&amp;view=groupmembers">OSM_GROUP_MEMBERS</menu>
-            <menu link="option=com_osmembership&amp;view=fields">OSM_CUSTOM_FIELDS</menu>
-            <menu link="option=com_osmembership&amp;view=taxes">OSM_TAX_RULES</menu>
-            <menu link="option=com_osmembership&amp;view=coupons">OSM_COUPONS</menu>
-            <menu link="option=com_osmembership&amp;view=import">OSM_IMPORT_SUBSCRIBERS</menu>
-            <menu link="option=com_osmembership&amp;view=plugins">OSM_PAYMENT_PLUGINS</menu>
-            <menu link="option=com_osmembership&amp;view=message">OSM_EMAIL_MESSAGES</menu>
-            <menu link="option=com_osmembership&amp;view=language">OSM_TRANSLATION</menu>
-            <menu link="option=com_osmembership&amp;view=countries">OSM_COUNTRIES</menu>
-            <menu link="option=com_osmembership&amp;view=states">OSM_STATES</menu>
-        </submenu>
         <languages>
             <language tag="en-GB">admin/languages/en-GB/en-GB.com_osmembership.sys.ini</language>
             <language tag="en-GB">admin/languages/en-GB/en-GB.com_osmembership.ini</language>
+
+            <language tag="es-ES">admin/languages/es-ES/es-ES.com_osmembership.sys.ini</language>
+            <language tag="es-ES">admin/languages/es-ES/es-ES.com_osmembership.ini</language>
         </languages>
         <files folder="admin">
             <filename>config.xml</filename>
@@ -76,5 +67,68 @@
             <folder>table</folder>
             <folder>sql</folder>
         </files>
+
+
+
+
+
+        <menu link="" view="">
+            MYGROUP_SOLUTION
+        </menu>
+        <submenu>
+            <menu  link="option=com_osservicesbooking" img="components/com_osservicesbooking/asset/images/calendar.png">COM_BOOKING</menu>
+            <!--<submenu>
+                <menu img="components/com_osservicesbooking/asset/images/icon-16-default.png" link="option=com_osservicesbooking">Dashboard</menu>
+                <menu img="components/com_osservicesbooking/asset/images/configuration.png" link="option=com_osservicesbooking&amp;task=configuration_list">Configuration</menu>
+                <menu img="components/com_osservicesbooking/asset/images/marker.png" link="option=com_osservicesbooking&amp;task=venue_list">Manage Venues</menu>
+                <menu img="components/com_osservicesbooking/asset/images/category.png" link="option=com_osservicesbooking&amp;task=category_list">Manage Categories</menu>
+                <menu img="components/com_osservicesbooking/asset/images/services.png" link="option=com_osservicesbooking&amp;task=service_list">Manage Services</menu>
+                <menu img="components/com_osservicesbooking/asset/images/order.png" link="option=com_osservicesbooking&amp;task=orders_list">Manage Services Orders</menu>
+                <menu img="components/com_osservicesbooking/asset/images/employee.png" link="option=com_osservicesbooking&amp;task=employee_list">Manage Employees</menu>
+                <menu img="components/com_osservicesbooking/asset/images/time.png" link="option=com_osservicesbooking&amp;task=worktime_list">Manage Working time</menu>
+                <menu img="components/com_osservicesbooking/asset/images/time.png" link="option=com_osservicesbooking&amp;task=worktimecustom_list">Manage Custom Working time</menu>
+                <menu img="components/com_osservicesbooking/asset/images/field.png" link="option=com_osservicesbooking&amp;task=fields_list">Manage Custom Fields</menu>    
+                <menu img="components/com_osservicesbooking/asset/images/email.png" link="option=com_osservicesbooking&amp;task=emails_list">Manage Email Templates</menu>
+                <menu img="components/com_osservicesbooking/asset/images/currency.png" link="option=com_osservicesbooking&amp;task=plugin_list">Manage Payment Plugins</menu>
+                <menu img="components/com_osservicesbooking/asset/images/coupon.png" link="option=com_osservicesbooking&amp;task=coupon_list">Manage Coupons</menu>
+                <menu img="components/com_osservicesbooking/asset/images/translation.png" link="option=com_osservicesbooking&amp;task=translation_list">Translation</menu>
+                <menu img="components/com_osservicesbooking/asset/images/data.png" link="option=com_osservicesbooking&amp;task=install_list">Install Sample Data</menu>
+            </submenu>-->
+            
+            <menu link="option=com_comprofiler" img="components/com_comprofiler/images/icon-16-cb.png">COM_COMPROFILER</menu>
+            <!--<submenu>
+                <menu view="" task="" img="class:cpanel">COM_COMPROFILER_CONTROLPANEL</menu>
+                <menu view="showusers" task="showusers" img="class:user">COM_COMPROFILER_SHOWUSERS</menu>
+                <menu view="showTab" task="showTab" img="class:themes">COM_COMPROFILER_SHOWTAB</menu>
+                <menu view="showField" task="showField" img="class:content">COM_COMPROFILER_SHOWFIELD</menu>
+                <menu view="showLists" task="showLists" img="class:search">COM_COMPROFILER_SHOWLISTS</menu>
+                <menu view="showPlugins" task="showPlugins" img="class:plugin">COM_COMPROFILER_SHOWPLUGINS</menu>
+                <menu view="tools" task="tools" img="class:maintenance">COM_COMPROFILER_TOOLS</menu>
+                <menu view="showconfig" task="showconfig" img="class:config">COM_COMPROFILER_SHOWCONFIG</menu>
+            </submenu>-->
+            
+            <menu link="option=com_osmembership&amp;view=dashboard" img="components/com_osmembership/images/icon-16-cb.png">OSM_MEMBERSHIP</menu>
+            <!--<submenu>
+                <menu link="option=com_osmembership&amp;view=dashboard">OSM_DASHBOARD</menu>
+                <menu link="option=com_osmembership&amp;view=configuration">OSM_CONFIGURATION</menu>
+                <menu link="option=com_osmembership&amp;view=categories">OSM_PLAN_CATEGORIES</menu>
+                <menu link="option=com_osmembership&amp;view=plans">OSM_SUBSCRIPTION_PLANS</menu>
+                <menu link="option=com_osmembership&amp;view=subscriptions">OSM_SUBSCRIPTIONS</menu>
+                <menu link="option=com_osmembership&amp;view=groupmembers">OSM_GROUP_MEMBERS</menu>
+                <menu link="option=com_osmembership&amp;view=fields">OSM_CUSTOM_FIELDS</menu>
+                <menu link="option=com_osmembership&amp;view=taxes">OSM_TAX_RULES</menu>
+                <menu link="option=com_osmembership&amp;view=coupons">OSM_COUPONS</menu>
+                <menu link="option=com_osmembership&amp;view=import">OSM_IMPORT_SUBSCRIBERS</menu>
+                <menu link="option=com_osmembership&amp;view=plugins">OSM_PAYMENT_PLUGINS</menu>
+                <menu link="option=com_osmembership&amp;view=message">OSM_EMAIL_MESSAGES</menu>
+                <menu link="option=com_osmembership&amp;view=language">OSM_TRANSLATION</menu>
+                <menu link="option=com_osmembership&amp;view=countries">OSM_COUNTRIES</menu>
+                <menu link="option=com_osmembership&amp;view=states">OSM_STATES</menu>
+            </submenu>-->
+            
+        </submenu>
+
+
+
     </administration>
 </extension>

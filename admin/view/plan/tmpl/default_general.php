@@ -68,6 +68,14 @@ defined('_JEXEC') or die;
 			<input class="input-small" type="text" name="subscription_quotas" id="subscription_quotas" size="10" maxlength="250" value="<?php echo $this->item->subscription_quotas;?>" />
 		</div>
 	</div>
+	<div class="control-group">
+		<div class="control-label">
+			<?php echo  JText::_('OSM_REMAINDER_QUOTAS'); ?>
+		</div>
+		<div class="controls">
+			<input class="input-small" type="text" name="remainder_quotas" id="remainder_quotas" size="10" maxlength="250" value="<?php echo $this->item->remainder_quotas;?>" />
+		</div>
+	</div>
 	<?php
 	if ($this->item->expired_date && $this->item->expired_date != $this->nullDate)
 	{

@@ -378,11 +378,13 @@ class OSMembershipControllerSubscription extends OSMembershipController
 
 		$cid = $this->input->get('cid', array(), 'array');
 		$cid = ArrayHelper::toInteger($cid);
+		//var_dump($cid);die;
 		//$id  = $cid[0];
 
 		/* @var OSMembershipModelSubscription $model */
 		$model = $this->getModel('subscription');
 		foreach ($cid as $key => $id) {
+			//echo "ID::is".$id;
 			$model->unfrozen($id);
 		}
 		

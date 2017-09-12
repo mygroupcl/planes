@@ -601,7 +601,7 @@ class OSMembershipHelperSubscription
 			$query->select('DISTINCT plan_id')
 				->from('#__osmembership_subscribers')
 				->where('user_id = ' . $userId)
-				->where('published IN (1, 2)');
+				->where('plan_subscription_status IN (1, 2, 5)');
 			$db->setQuery($query);
 
 			return $db->loadColumn();
@@ -632,7 +632,7 @@ class OSMembershipHelperSubscription
 			$query->select('DISTINCT plan_id')
 				->from('#__osmembership_subscribers')
 				->where('user_id = ' . $userId)
-				->where('published = 6');
+				->where('plan_subscription_status = 6');
 			$db->setQuery($query);
 
 			return $db->loadColumn();
@@ -663,7 +663,7 @@ class OSMembershipHelperSubscription
 			$query->select('DISTINCT plan_id')
 				->from('#__osmembership_subscribers')
 				->where('user_id = ' . $userId)
-				->where('published in (2,5)');
+				->where('(plan_subscription_status in (2,5) or published in (2,5))');
 			$db->setQuery($query);
 
 			return $db->loadColumn();

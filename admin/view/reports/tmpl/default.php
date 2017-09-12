@@ -153,7 +153,14 @@ JHtml::_('formbehavior.chosen', 'select');
 		                        case 4 :
 		                            echo JText::_('OSM_CANCELLED_REFUNDED');
 		                            break ;
+		                        case 5 :
+		                            echo JText::_('OSM_CONSUMMED');
+		                            break ;
+		                        case 5 :
+		                            echo JText::_('OSM_FROZEN');
+		                            break ;
 		                    }
+		                    //}
 							if ($row->recurring_subscription_cancelled)
 							{
 								echo '<br /><span class="text-error">' . JText::_('OSM_RECURRING_CANCELLED').'</span>';

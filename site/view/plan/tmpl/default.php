@@ -28,6 +28,8 @@ $pageHeading = $this->params->get('page_heading') ? $this->params->get('page_hea
 
 $subscribedPlanIds = OSMembershipHelperSubscription::getSubscribedPlans();
 $exclusivePlanIds = OSMembershipHelperSubscription::getExclusivePlanIds();
+$frozenPlansIds	= OSMembershipHelperSubscription::getFrozenPlans();
+$consumedandexpiredPlansIds = OSMembershipHelperSubscription::getConsumedandexpiredPlans();
 
 $nullDate    = JFactory::getDbo()->getNullDate();
 $symbol = $item->currency_symbol ? $item->currency_symbol : $item->currency;
@@ -204,6 +206,16 @@ $symbol = $item->currency_symbol ? $item->currency_symbol : $item->currency;
 						</li>
 					<?php
 					}
+					else if (in_array($item->id, $consumedandexpiredPlansIds)) 
+						{
+								?>
+								<a href="<?php echo $signUpUrl; ?>" class="<?php echo $this->bootstrapHelper->getClassMapping('btn'); ?> btn-primary"
+								<?php 
+								echo JText::_('OSM_RENEW');
+								 ?>
+								</a>
+								<?php
+						}
 					?>
 				</ul>
 			</div>

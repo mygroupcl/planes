@@ -17,8 +17,15 @@ $btnClass      = $bootstrapHelper->getClassMapping('btn');
 $imgClass      = $bootstrapHelper->getClassMapping('img-polaroid');
 $rowFluidClass = $bootstrapHelper->getClassMapping('row-fluid');
 
+//subscripciones por expirar
 $subscribedPlanIds = OSMembershipHelperSubscription::getSubscribedPlans();
+//subscripciones congeladas
+$frozenPlansIds	= OSMembershipHelperSubscription::getFrozenPlans();
+//sbscripciones expiradas o consumidas
+$consumedandexpiredPlansIds = OSMembershipHelperSubscription::getConsumedandexpiredPlans();
+//subscripciones esclusivas
 $exclusivePlanIds = OSMembershipHelperSubscription::getExclusivePlanIds();
+
 $nullDate      = JFactory::getDbo()->getNullDate();
 $defaultItemId = $Itemid;
 
@@ -212,33 +219,55 @@ for ($i = 0 , $n = count($items) ;  $i < $n ; $i++)
 					</table>
 				</div>
 			</div>
+
 			<div class="osm-taskbar clearfix">
 				<ul>
-					<?php
-					if (OSMembershipHelper::canSubscribe($item) && (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds)))
-					{
-					?>
-						<li>
-							<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
-								<?php echo in_array($item->id, $subscribedPlanIds) ? JText::_('OSM_RENEW') : JText::_('OSM_SIGNUP'); ?>
-							</a>
-						</li>
-					<?php
-					}
 
-					if (empty($config->hide_details_button))
-					{
-					?>
-						<li>
-							<a href="<?php echo $url; ?>" class="<?php echo $btnClass; ?>">
-								<?php echo JText::_('OSM_DETAILS'); ?>
-							</a>
-						</li>
-					<?php
-					}
-					?>
+			<?php
+						if (OSMembershipHelper::canSubscribe($item) &&  (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds) ) )
+						{
+						?>
+							<li>
+								<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
+									<?php 
+									if((in_array($item->id, $subscribedPlanIds) || in_array($item->id, $consumedandexpiredPlansIds)))
+										echo JText::_('OSM_RENEW');
+									elseif(in_array($item->id, $frozenPlansIds))
+									 	echo "";
+									 else
+									 	echo JText::_('OSM_SIGNUP'); 
+									 ?>
+								</a>
+							</li>
+						<?php
+						}
+						else if (in_array($item->id, $consumedandexpiredPlansIds)) 
+						{
+								?>
+								<li>
+									<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
+									<?php 
+									echo JText::_('OSM_RENEW');
+									 ?>
+									</a>
+								</li>
+								<?php
+						}
+
+						if (empty($config->hide_details_button))
+						{
+						?>
+							<li>
+								<a href="<?php echo $url; ?>" class="<?php echo $btnClass; ?>">
+									<?php echo JText::_('OSM_DETAILS'); ?>
+								</a>
+							</li>
+						<?php
+						}
+						?>
 				</ul>
 			</div>
+	
 		</div>
 	</div>
 <?php

@@ -23,10 +23,8 @@ $subscribedPlanIds = OSMembershipHelperSubscription::getSubscribedPlans();
 $frozenPlansIds	= OSMembershipHelperSubscription::getFrozenPlans();
 //sbscripciones expiradas o consumidas
 $consumedandexpiredPlansIds = OSMembershipHelperSubscription::getConsumedandexpiredPlans();
-var_dump($consumedandexpiredPlansIds);
 //subscripciones esclusivas
 $exclusivePlanIds = OSMembershipHelperSubscription::getExclusivePlanIds();
-
 
 $nullDate      = JFactory::getDbo()->getNullDate();
 $defaultItemId = $Itemid;
@@ -142,13 +140,12 @@ for ($i = 0 , $n = count($items) ;  $i < $n ; $i++)
 	</li>
 	<li class="footer1">
 						<?php
-						if (OSMembershipHelper::canSubscribe($item) && (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds)))
+						if (OSMembershipHelper::canSubscribe($item) &&  (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds) ) )
 						{
 						?>
 								<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
 									<?php 
-									if(in_array($item->id, $subscribedPlanIds) 
-										|| in_array($item->id, $consumedandexpiredPlansIds))
+									if((in_array($item->id, $subscribedPlanIds) || in_array($item->id, $consumedandexpiredPlansIds)))
 										echo JText::_('OSM_RENEW');
 									elseif(in_array($item->id, $frozenPlansIds))
 									 	echo "";
@@ -157,6 +154,16 @@ for ($i = 0 , $n = count($items) ;  $i < $n ; $i++)
 									 ?>
 								</a>
 						<?php
+						}
+						else if (in_array($item->id, $consumedandexpiredPlansIds)) 
+						{
+								?>
+								<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
+								<?php 
+								echo JText::_('OSM_RENEW');
+								 ?>
+								</a>
+								<?php
 						}
 
 						if (empty($config->hide_details_button))

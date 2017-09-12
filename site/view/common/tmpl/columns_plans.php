@@ -38,7 +38,13 @@ $i = 0;
 $numberPlans = count($items);
 $defaultItemId = $Itemid;
 
+//subscripciones por expirar
 $subscribedPlanIds = OSMembershipHelperSubscription::getSubscribedPlans();
+//subscripciones congeladas
+$frozenPlansIds	= OSMembershipHelperSubscription::getFrozenPlans();
+//sbscripciones expiradas o consumidas
+$consumedandexpiredPlansIds = OSMembershipHelperSubscription::getConsumedandexpiredPlans();
+//subscripciones esclusivas
 $exclusivePlanIds = OSMembershipHelperSubscription::getExclusivePlanIds();
 
 foreach ($items as $item)
@@ -87,18 +93,40 @@ foreach ($items as $item)
 				}
 				?>
 				<div class="osm-item-description-text"><?php echo $item->short_description; ?></div>
-				 <div class="osm-taskbar clearfix">
-					<ul>
-						<?php
-						if (OSMembershipHelper::canSubscribe($item) && (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds)))
+
+
+				<div class="osm-taskbar clearfix">
+				<ul>
+
+			<?php
+						if (OSMembershipHelper::canSubscribe($item) &&  (!in_array($item->id, $exclusivePlanIds) || in_array($item->id, $subscribedPlanIds) ) )
 						{
 						?>
 							<li>
 								<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
-									<?php echo in_array($item->id, $subscribedPlanIds) ? JText::_('OSM_RENEW') : JText::_('OSM_SIGNUP'); ?>
+									<?php 
+									if((in_array($item->id, $subscribedPlanIds) || in_array($item->id, $consumedandexpiredPlansIds)))
+										echo JText::_('OSM_RENEW');
+									elseif(in_array($item->id, $frozenPlansIds))
+									 	echo "";
+									 else
+									 	echo JText::_('OSM_SIGNUP'); 
+									 ?>
 								</a>
 							</li>
 						<?php
+						}
+						else if (in_array($item->id, $consumedandexpiredPlansIds)) 
+						{
+								?>
+								<li>
+									<a href="<?php echo $signUpUrl; ?>" class="<?php echo $btnClass; ?> btn-primary">
+									<?php 
+									echo JText::_('OSM_RENEW');
+									 ?>
+									</a>
+								</li>
+								<?php
 						}
 
 						if (empty($config->hide_details_button))
@@ -112,7 +140,7 @@ foreach ($items as $item)
 						<?php
 						}
 						?>
-					</ul>
+				</ul>
 			</div>
 		</div>
 	</div>

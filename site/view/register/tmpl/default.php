@@ -119,7 +119,19 @@ echo $this->loadTemplate('login', array('fields' => $fields));
 	}
 	?>
 	<div class="form-actions">
-		<input type="submit" class="<?php echo $bootstrapHelper->getClassMapping('btn'); ?> btn-primary" name="btnSubmit" id="btn-submit" value="<?php echo  JText::_('OSM_PROCESS_SUBSCRIPTION') ;?>">
+		<?php 
+			if($this->renewOptionId > 0){
+				$button_action = JText::_('OSM_PROCESS_RENEW');
+			}
+			elseif($this->upgradeOptionId){
+				$button_action = JText::_('OSM_PROCESS_UPGRADE');
+			}
+			else{
+				$button_action = JText::_('OSM_PROCESS_SUBSCRIPTION');
+			}
+			
+		?>
+		<input type="submit" class="<?php echo $bootstrapHelper->getClassMapping('btn'); ?> btn-primary" name="btnSubmit" id="btn-submit" value="<?php echo  $button_action  ;?>">
 		<img id="ajax-loading-animation" src="<?php echo JUri::base();?>media/com_osmembership/ajax-loadding-animation.gif" style="display: none;"/>
 	</div>
 <?php

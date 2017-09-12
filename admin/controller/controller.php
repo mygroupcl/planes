@@ -644,12 +644,7 @@ class OSMembershipController extends MPFControllerAdmin
 			$db->execute();
 		}
 
-		if (!in_array('updated_date', $fields))
-		{
-			$sql = "ALTER TABLE  `#__osmembership_fields` ADD  `updated_date` DATETIME DEFAULT NULL;";
-			$db->setQuery($sql);
-			$db->execute();
-		}
+		
 
 		$sql = 'SELECT COUNT(*) FROM #__osmembership_fields WHERE show_on_members_list = 1';
 		$db->setQuery($sql);
@@ -1345,6 +1340,13 @@ class OSMembershipController extends MPFControllerAdmin
 			$db->execute();
 		}
 
+		if (!in_array('remainder_quotas', $fields))
+		{
+			$sql = "ALTER TABLE  `#__osmembership_plans` ADD  `remainder_quotas` INT NOT NULL DEFAULT  '0';";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
 		// Renewal rates
 		$fields = array_keys($db->getTableColumns('#__osmembership_renewrates'));
 		if (!in_array('renew_option_length', $fields))
@@ -1713,6 +1715,20 @@ class OSMembershipController extends MPFControllerAdmin
 		{
 			$needToMigrateData = true;
 			$sql               = "ALTER TABLE  `#__osmembership_subscribers` ADD  `plan_subscription_quotas` INT NOT NULL DEFAULT  '0';";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
+		if (!in_array('updated_date', $fields))
+		{
+			$sql = "ALTER TABLE  `#__osmembership_subscribers` ADD  `updated_date` DATETIME DEFAULT NULL;";
+			$db->setQuery($sql);
+			$db->execute();
+		}
+
+		if (!in_array('frozen_date', $fields))
+		{
+			$sql = "ALTER TABLE  `#__osmembership_subscribers` ADD  `frozen_date` DATETIME DEFAULT NULL;";
 			$db->setQuery($sql);
 			$db->execute();
 		}

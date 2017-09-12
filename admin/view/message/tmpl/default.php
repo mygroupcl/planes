@@ -42,6 +42,10 @@ JHtml::_('behavior.tabstate');
 	echo $this->loadTemplate('reminder', array('editor' => $editor));
 	echo JHtml::_('bootstrap.endTab');
 
+	echo JHtml::_('bootstrap.addTab', 'message', 'consumed-page', JText::_('OSM_OTHERS_MESSAGES', true));
+	echo $this->loadTemplate('others', array('editor' => $editor));
+	echo JHtml::_('bootstrap.endTab');
+
 	if ($translatable)
 	{
 		echo JHtml::_('bootstrap.addTab', 'message', 'translation-page', JText::_('OSM_TRANSLATION', true));

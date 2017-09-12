@@ -77,11 +77,13 @@ class OSMembershipModelSubscription extends MPFModelAdmin
 			$isNew = false;
 			$row->load($data['id']);
 			$published = $row->published;
+			$row->updated_date = JFactory::getDate('now')->toSql();
 		}
 		else
 		{
 			$published = 0; //Default is pending
 		}
+		$old_status = $row->published;
 		if (!$row->bind($data))
 		{
 			throw new Exception($db->getErrorMsg());
@@ -93,6 +95,9 @@ class OSMembershipModelSubscription extends MPFModelAdmin
 		$row->user_id          = (int) $row->user_id;
 		$row->is_profile       = 1;
 		$row->plan_main_record = 1;
+
+		if($row->published == 5 && $old_status ==1)
+			$row->frozen_date = JFactory::getDate('now')->toSql();
 
 		$rowFields = OSMembershipHelper::getProfileFields($row->plan_id, false);
 
@@ -684,45 +689,28 @@ class OSMembershipModelSubscription extends MPFModelAdmin
 		$db       = $this->getDbo();
 		$nullDate = $db->getNullDate();
 		$query    = $db->getQuery(true);
-		$query->select('*ƒ')
+		
+		$query->select('*')
 			->from('#__osmembership_plans')
 			->where('id = ' . (int) $row->plan_id);
+
 		$db->setQuery($query);
 		$plan = $db->loadObject();
-		$now = JFactory::getDate()->toSql();
+		$now = JFactory::getDate();
 
 		$row->updated_date = $now;
 
-		$subscription_length 		= $rowPlan->subscription_length;
-		$subscription_length_unit   = $rowPlan->subscription_length_unit;
-		switch ($subscription_length_unit) {
-			case 'D':
-				$unit = "days";
-				break;
-			case 'W':
-				$unit = "weeks";
-				break;
-			case 'M':
-				$unit = "months";
-				break;
-			case 'Y':
-				$unit = "years";
-				break;
-			default:
-				$unit = null;
-				break;
-		}
-
-		if ($rowPlan->expired_date && $rowPlan->expired_date != $nullDate)
+		if ($row->to_date && $row->to_date != $nullDate)
 		{
-			$new_expire_date = strtotime(date('d-m-Y H:m:s'),'now +'.$subscription_length.' '.$unit);
-			$day_diff = date_diff(create_date($row->updated_date),crete_date($row->from_date))->days;
+			$dateIntervalSpec = 'P' . $plan->subscription_length . $plan->subscription_length_unit;
+			$new_expire_date  = $now->add(new DateInterval($dateIntervalSpec));
 
-			$new_expire_date_fixed = strtotime(date('d-m-Y H:m:s'),$new_expire_date .'+'.$day_diff.' days');
-			$new_expire_date_fixed = JFactory::getDate($new_expire_date_fixed);
-			$expiredDate = $new_expire_date_fixed->toSql();
+			$frozen_date= date_create($row->frozen_date)->format('d-m-Y');
+			$from_date = date_create($row->from_date)->format('d-m-Y');
+			$day_diff = date_diff(date_create($frozen_date),date_create($from_date))->days;
 
-			$row->to_date = $expiredDate;
+			$dateIntervalSpec = 'P' . $day_diff . 'D';
+			$row->to_date =JFactory::getDate($new_expire_date->sub(new DateInterval($dateIntervalSpec)))->toSql();
 		}
 		else
 		{
@@ -732,11 +720,10 @@ class OSMembershipModelSubscription extends MPFModelAdmin
 			}
 			else
 			{
-				$dateIntervalSpec = 'P' . $rowPlan->subscription_length . $rowPlan->subscription_length_unit;
+				$dateIntervalSpec = 'P' . $plan->subscription_length . $plan->subscription_length_unit;
 				$row->to_date     = $date->add(new DateInterval($dateIntervalSpec))->toSql();
 			}
 		}
-
 		$row->store();
 
 		JPluginHelper::importPlugin('osmembership');

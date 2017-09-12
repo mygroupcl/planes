@@ -40,4 +40,10 @@ INSERT INTO `#__osmembership_messages` (`id`, `message_key`, `message`) VALUES
 (39, 'second_reminder_email_subject', 'Your subscription for plan [PLAN_TITLE] will be expired in [NUMBER_DAYS] days'),
 (40, 'second_reminder_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site will expire on <strong>[EXPIRE_DATE]</strong> (which is in [NUMBER_DAYS] from now).</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>'),
 (41, 'third_reminder_email_subject', 'Your subscription for plan [PLAN_TITLE] will be expired in [NUMBER_DAYS] days'),
-(42, 'third_reminder_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site will expire on <strong>[EXPIRE_DATE]</strong> (which is in [NUMBER_DAYS] from now).</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>');
+(42, 'third_reminder_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site will expire on <strong>[EXPIRE_DATE]</strong> (which is in [NUMBER_DAYS] from now).</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>'),
+(43, 'consumed_email_subject', 'Your subscription for plan [PLAN_TITLE] was consummed'),
+(44, 'consumed_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site was consummed.</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>'),
+(45, 'rective_email_subject', 'Your subscription for plan [PLAN_TITLE] is re active'),
+(46, 'rective_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site is reactive, in order to can take service <strong>[SERVICE_NAME]</strong>, wich has canceled.</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>'),
+(47, 'last_quote_email_subject', 'Your subscription for plan [PLAN_TITLE] only have one quote'),
+(48, 'last_quote_email_body', '<p>Dear <strong>[FIRST_NAME] [LAST_NAME]</strong></p>\r\n<p>Your subscription for plan <strong>[PLAN_TITLE]</strong> on our site is almost expired, only have one quote.</p>\r\n<p>Regards,</p>\r\n<p>Company Name</p>');
